@@ -3,6 +3,9 @@ import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
+import { TextField } from "@mui/material";
+import Image from "next/image";
+import Input from "./Input";
 
 export default function Login({
   searchParams,
@@ -52,7 +55,7 @@ export default function Login({
   };
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+    <div className="container flex flex-col md:flex-row justify-center md:justify-around items-center h-screen px-10">
       <Link
         href="/"
         className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -73,46 +76,43 @@ export default function Login({
         </svg>{" "}
         Back
       </Link>
+      <div className="hidden w-full md:flex justify-center items-center">
+        <Image
+          src="/loginthum.png"
+          width={400}
+          height={500}
+          alt="login thumbnail"
+        />
+      </div>
 
-      <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <SubmitButton
-          formAction={signIn}
-          className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing In..."
-        >
-          Sign In
-        </SubmitButton>
-        <SubmitButton
-          formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing Up..."
-        >
-          Sign Up
-        </SubmitButton>
+      <form className=" flex flex-col w-full justify-center items-center gap-5 ">
+        <Input InputProps={{ name: "email" }}/>
+        <Input InputProps={{ name: "password" }}/>
+
+        <div className="flex justify-center gap-3">
+          <SubmitButton
+            formAction={signIn}
+            className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+            pendingText="Signing In..."
+            >
+            Sign In
+          </SubmitButton>
+          <SubmitButton
+            formAction={signUp}
+            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+            pendingText="Signing Up..."
+            >
+            Sign Up
+          </SubmitButton>
+        </div>
+
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
             {searchParams.message}
           </p>
         )}
+
+        {/* TODO: create a sign in button and redirect to create account page */}
       </form>
     </div>
   );

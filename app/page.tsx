@@ -1,3 +1,4 @@
+import { Avatar, Button } from "@mui/material";
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 
@@ -16,10 +17,17 @@ export default async function Index() {
   const isSupabaseConnected = canInitSupabaseClient();
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          {isSupabaseConnected && <AuthButton />}
+    <div className="container">
+      <nav className="w-full flex justify-between items-center h-16 py-2">
+        <div className="flex">
+          <Avatar alt="d logo" src="/svg/dot/Dotcopy.svg" className="w-fit h-10" />
+          <Avatar alt="d logo" src="/svg/dot/OT(name).svg" className="hidden md:block w-fit h-10" />
+        </div>
+        <div>
+          <Button variant="contained">
+            {isSupabaseConnected && <AuthButton />}
+          </Button>
+          {/* TODO: add trend movies and series to landing page */}
         </div>
       </nav>
     </div>
