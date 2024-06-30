@@ -1,6 +1,8 @@
-import { Avatar, Button } from "@mui/material";
 import AuthButton from "../components/AuthButton";
+import TrendMovie from "../components/TrendMovie"
 import { createClient } from "@/utils/supabase/server";
+import Image from "next/image";
+
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -20,16 +22,32 @@ export default async function Index() {
     <div className="container">
       <nav className="w-full flex justify-between items-center h-16 py-2">
         <div className="flex">
-          <Avatar alt="d logo" src="/svg/dot/Dotcopy.svg" className="w-fit h-10" />
-          <Avatar alt="d logo" src="/svg/dot/OT(name).svg" className="hidden md:block w-fit h-10" />
+          <Image 
+            alt="d logo"
+            src="/svg/dot/Dotcopy.svg"
+            className="w-fit h-10" 
+            width={100}
+            height={50}
+          />
+          <Image 
+            alt="ot logo" 
+            src="/svg/dot/OT(name).svg" 
+            className="hidden md:block" 
+            width={100}
+            height={50}  
+          />
         </div>
         <div>
-          <Button variant="contained">
+          <button>
             {isSupabaseConnected && <AuthButton />}
-          </Button>
-          {/* TODO: add trend movies and series to landing page */}
+          </button>
         </div>
       </nav>
+      <div>
+
+        <TrendMovie />
+      </div>
+          {/* TODO: add trend movies and series to landing page */}
     </div>
   );
 }
