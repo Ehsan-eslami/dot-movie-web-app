@@ -37,7 +37,7 @@ export async function getTrendMovie(): Promise<MovieResponse> {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjljMTdhNGZiYTQwZDBmZDc4ODkwNTdjMzc2MDg5OSIsIm5iZiI6MTcxOTc1Nzc2OS4xODI1NjksInN1YiI6IjY1ZTViZDNiYjdhMTU0MDE2MzdhMzQ1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GlQTe5vDRYgpCVdz8b0b3OmHm5QIjpCVrJ46p381QWE",
+      Authorization: process.env.THE_MOVIE_DB_BEARER_TOKEN,
     },
   };
 
@@ -130,8 +130,8 @@ const TrendMovie = () => {
                     alt="movie poster"
                   />
                 </div>
-                <div className="flex flex-col">
                   <h1 className="text-wrap font-semibold text-xl">"{item.title}"</h1>
+                <div className="flex flex-col">
                   <p className="text-xs">{item.overview}</p>
                 </div>
               </div>
