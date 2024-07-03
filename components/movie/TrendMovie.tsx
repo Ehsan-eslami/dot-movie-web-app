@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaStar } from 'react-icons/fa';
 
 interface Movie {
   title: string;
@@ -37,8 +38,8 @@ export async function getTrendMovie(): Promise<MovieResponse> {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: process.env.THE_MOVIE_DB_BEARER_TOKEN,
-    },
+      Authorization: process.env.THE_MOVIE_DB_BEARER_TOKEN!, 
+    }
   };
 
   const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US`;
@@ -50,7 +51,7 @@ export async function getTrendMovie(): Promise<MovieResponse> {
 
     const movies: Movie[] = data.results.map((item: any) => ({
       title: item.title,
-      overview: truncateText(item.overview, 10),
+      overview: truncateText(item.overview, 20),
       releaseDate: new Date(item.release_date).toLocaleDateString(),
       posterSrc: `${imgUrl}${item.poster_path}`,
       adult: item.adult,
@@ -86,6 +87,7 @@ const TrendMovie = () => {
   }, []);
 
   useEffect(() => {
+    if (movies.length === 0) return;
     const interval = setTimeout(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % movies.length);
     }, 3000);
@@ -117,10 +119,10 @@ const TrendMovie = () => {
             >
               <img
                 src={item.backdropPath}
-                className=" relative block w-full h-full  "
+                className="relative block w-full h-full"
                 alt={item.title}
               />
-              <div className="flex flex-row gap-2 p-1 absolute  backdrop-blur-sm text-black border-gray-500 rounded-lg top-5 left-5">
+              <div className="flex flex-row gap-2 p-1 absolute backdrop-brightness-50 text-white border-gray-500 rounded-lg top-5 left-5">
                 <div>
                   <img
                     src={item.posterSrc}
@@ -130,9 +132,15 @@ const TrendMovie = () => {
                     alt="movie poster"
                   />
                 </div>
-                  <h1 className="text-wrap font-semibold text-xl">"{item.title}"</h1>
-                <div className="flex flex-col">
-                  <p className="text-xs">{item.overview}</p>
+                <div className="flex flex-col gap-2 p-3 ">
+                  <h1 className=" font-semibold text-xl text-center">{item.title}</h1>
+                  <p className="w-[300px] text-justify text-sm">{item.overview}</p>
+                  <p>{item.releaseDate}</p>
+                  <p>{item.voteCount} vote</p>
+                  <span className="flex gap-1">
+                      {Math.round(item.voteAverage * 2) / 2}
+                    <FaStar color="yellow" className="my-auto"/>
+                  </span>
                 </div>
               </div>
             </div>
@@ -143,7 +151,7 @@ const TrendMovie = () => {
           {movies.map((_, index) => (
             <button
               type="button"
-              className={`w-3 h-3 rounded-full ${index === activeIndex ? "bg-white" : "bg-gray-400"}`}
+              className={`w-2 h-2 rounded-full ${index === activeIndex ? "bg-white" : "bg-gray-400"}`}
               aria-current={index === activeIndex ? "true" : "false"}
               aria-label={`Slide ${index + 1}`}
               data-carousel-slide-to={index}

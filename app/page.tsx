@@ -1,5 +1,5 @@
 import AuthButton from "../components/AuthButton";
-import TrendMovie from "../components/TrendMovie"
+import TrendMovie from "../components/movie/TrendMovie"
 import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
 
